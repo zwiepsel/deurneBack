@@ -1,0 +1,252 @@
+<div class="modal fade" id="discountSearchModal" tabindex="-1" role="dialog" aria-labelledby="discountSearchModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-header-success bg-green">
+                <button type="button" class="close" ng-click="abortSearchDiscount()" aria-hidden="true">×</button>
+                <h1><i class="glyphicon glyphicon-calendar"></i>Kortingen</h1>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="discountSearchForm" role="form">
+                    <fieldset>
+                        <!-- Form Name -->
+                        <legend>Korting details</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Email</label>
+                            <div class="col-sm-8">
+                                <input type="email" placeholder="Email" name="Email" class="form-control" ng-model="chosenDiscount.email" >
+                                <p ng-show="discountSearchForm.Email.$invalid" class="help-block">Ongeldige email.</p>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Kortingscode</label>
+                            <div class="col-sm-6">
+								<div class="input-group">
+								<input type="text" placeholder="Kortingscode" name="Code" class="form-control" ng-model="chosenDiscount.code" >
+								</div>
+                                <p ng-show="discountSearchForm.Code.$invalid && submitted" class="help-block">Kortingscode is verplicht.</p>	
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Omschrijving</label>
+                            <div class="col-sm-8">
+                                <input type="text" placeholder="Omschrijving" name="description" class="form-control" ng-model="chosenDiscount.description"
+                                    >
+                                <p ng-show="discountSearchForm.description.$invalid && submitted" class="help-block">Omschrijving is verplicht.</p>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Bedrag</label>
+                            <div class="col-sm-4">
+                                <input type="number" placeholder="Bedrag €" ng-disabled="true" name="amount" class="form-control" ng-model="chosenDiscount.amount" >
+                                <p ng-show="!chosenDiscount.percentage && discountSearchForm.amount.$invalid && submitted" class="help-block">Ongeldig bedrag.</p>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Percentage </label>
+                            <div class="col-sm-4">
+                                <input type="number" ng-disabled="true" placeholder="Percentage %" name="percentage" class="form-control" ng-model="chosenDiscount.percentage" ng-required="!chosenDiscount.amount"> 
+                                <p ng-show="!chosenDiscount.amount && discountSearchForm.percentage.$invalid && submitted" class="help-block">Ongeldig percentage.</p>
+                            </div>
+                        </div>
+						<!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Charges</label>
+                            <div class="col-sm-4">
+                                <input type="number" ng-disabled="true" placeholder="hoevaak bruikbaar" name="charges" class="form-control" ng-model="chosenDiscount.charges" > 
+                                <p ng-show="discountSearchForm.charges.$invalid && submitted" class="help-block">Ongeldig aantal.</p>
+                            </div>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Geldig van</label>
+                            <div class="col-sm-4">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" class="form-control"  ng-disabled="true"  name="startDate" value="" ng-model="chosenDiscount.startDate" >
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+								<p ng-show="discountSearchForm.startDate.$invalid && submitted" class="help-block">Ongeldige datum.</p>
+                            </div>
+
+                            <label class="col-sm-1 control-label" for="textinput">Geldig tot</label>
+                            <div class="col-sm-4">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" class="form-control"  ng-disabled="true"  name="endDate" value="" ng-model="chosenDiscount.endDate">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+								<p ng-show="discountSearchForm.endDate.$invalid && submitted" class="help-block">Ongeldige datum.</p>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-right" style="margin-right:10px;" ng-click="searchDiscount(chosenDiscount)">Zoek</button>
+                <button type="button" class="btn btn-default pull-right" style="margin-right:10px;" ng-click="abortSearchDiscount()">Sluit</button>
+                <button type="button" ng-hide="discountSearch" class="btn btn-default pull-left delete-btn" style="margin-right:10px;" ng-click="deleteDiscount()">Verwijder</button>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="discountModal" tabindex="-1" role="dialog" aria-labelledby="discountModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-header-success bg-green">
+                <button type="button" class="close" ng-click="abortDiscount()" aria-hidden="true">×</button>
+                <h1><i class="glyphicon glyphicon-calendar"></i>Kortingen</h1>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="discountForm" role="form">
+                    <fieldset>
+                        <!-- Form Name -->
+                        <legend>Korting details</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Email</label>
+                            <div class="col-sm-8">
+                                <input type="email" placeholder="Email" name="Email" class="form-control" ng-model="chosenDiscount.email" required>
+                                <p ng-show="discountForm.Email.$invalid && submitted" class="help-block">Ongeldige email.</p>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Kortingscode</label>
+                            <div class="col-sm-6">
+								<div class="input-group">
+								<input type="text" placeholder="Kortingscode" name="Code" class="form-control" ng-model="chosenDiscount.code" required>
+								<span class="input-group-btn ">
+									<button class="btn btn-secondary discountCode" ng-click="generateCode()" type="button">Genereer</button>
+								</span>
+								</div>
+                                <p ng-show="discountForm.Code.$invalid && submitted" class="help-block">Kortingscode is verplicht.</p>	
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Omschrijving</label>
+                            <div class="col-sm-8">
+                                <input type="text" placeholder="Omschrijving" name="description" class="form-control" ng-model="chosenDiscount.description"
+                                    required>
+                                <p ng-show="discountForm.description.$invalid && submitted" class="help-block">Omschrijving is verplicht.</p>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Bedrag</label>
+                            <div class="col-sm-4">
+                                <input type="number" placeholder="Bedrag €" ng-disabled="chosenDiscount.percentage" name="amount" class="form-control" ng-model="chosenDiscount.amount" ng-required="!chosenDiscount.percentage">
+                                <p ng-show="!chosenDiscount.percentage && discountForm.amount.$invalid && submitted" class="help-block">Ongeldig bedrag.</p>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Percentage </label>
+                            <div class="col-sm-4">
+                                <input type="number" ng-disabled="chosenDiscount.amount" placeholder="Percentage %" name="percentage" class="form-control" ng-model="chosenDiscount.percentage" ng-required="!chosenDiscount.amount"> 
+                                <p ng-show="!chosenDiscount.amount && discountForm.percentage.$invalid && submitted" class="help-block">Ongeldig percentage.</p>
+                            </div>
+                        </div>
+						<!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Charges</label>
+                            <div class="col-sm-4">
+                                <input type="number" placeholder="hoevaak bruikbaar" name="charges" class="form-control" ng-model="chosenDiscount.charges" required> 
+                                <p ng-show="discountForm.charges.$invalid && submitted" class="help-block">Ongeldig aantal.</p>
+                            </div>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Geldig van</label>
+                            <div class="col-sm-4">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" class="form-control" name="startDate" value="" ng-model="chosenDiscount.startDate" required>
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+								<p ng-show="discountForm.startDate.$invalid && submitted" class="help-block">Ongeldige datum.</p>
+                            </div>
+
+                            <label class="col-sm-1 control-label" for="textinput">Geldig tot</label>
+                            <div class="col-sm-4">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" class="form-control" name="endDate" value="" ng-model="chosenDiscount.endDate" required>
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+								<p ng-show="discountForm.endDate.$invalid && submitted" class="help-block">Ongeldige datum.</p>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-right" style="margin-right:10px;" ng-click="saveDiscount(chosenDiscount)">Opslaan</button>
+                <button type="button" class="btn btn-default pull-right" style="margin-right:10px;" ng-click="abortDiscount()">Sluit</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div>
+    <div ng-include="'menu.html'"></div>
+    <snap-dragger></snap-dragger>
+    <snap-content snap-opt-tap-to-close="false" class="bg-green">
+        <a href="" snap-toggle="left" ng-click="menuOpen = !menuOpen">
+			<span class="menutoggle">
+				<i ng-hide="menuOpen" class="fa fa-bars fa-2x" ></i>
+				<i ng-show="menuOpen" class="fa fa-times fa-2x" ></i>
+			</span>
+		</a>
+
+        <div class="fr">
+            <h2>Kortingen <small>Beheer en wijzig uw kortingen</small></h2>
+        </div>
+        <span class="glyphicon glyphicon-dashboard bg-fade"></span>
+        <div class="title center-align">
+            <h1>Kortingen</h1>
+        </div>
+		<div class="row" style="text-align:center;">
+			<span class="center-align" style="margin-top:40px;margin-bottom:40px;">
+                <a class="btn btn-primary btn-lg btn-white" ng-click="createDiscount()">Nieuwe korting</a>
+            </span>
+				<span class="center-align" style="margin-top:40px;margin-bottom:40px;">
+                <a class="btn btn-primary btn-lg btn-white" ng-click="findDiscount()">Zoek korting</a>
+            </span>
+
+		</div>
+		<div>
+
+		</div>
+		<div>
+
+		</div>
+        <div class="row center-align">
+            <p class="center-align" style="margin-top:100px;margin-bottom:40px;">
+                <a class="btn btn-primary btn-lg btn-white" ui-sref="overview">Terug naar overzicht</a>
+            </p>
+    </snap-content>
+    </div>

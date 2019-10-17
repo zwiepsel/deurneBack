@@ -1,0 +1,31 @@
+<div class="login-page">
+	<div class="img-container">
+		<div class="text-center pull-right photo">
+			<img src="images/ames_sport.png" class="user-avatar img-circle img-responsive" />
+				<h2>Powered By<br/> <span>Cloudsports</span><br /><small>V1.0</small></h2>
+			</div>
+		</div>
+		
+		<div class="form-content">
+			<div class="pro-link">
+				<a href="http://h2699305.stratoserver.net/">Ga naar voorkant</a>
+			</div>
+			<form role="form" class="bottom-75" ng-submit="submit()">
+			<div class="table-form">
+				<div class="form-groups">
+					<div class="form-group">
+						<input type="text" class="form-control input-lg" id="" placeholder="Email" ng-model="user.email">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control input-lg" id="" placeholder="Wachtwoord" ng-model="user.password">
+					</div>											
+				</div>	
+				<div class="button-container">
+					<button type="submit" class="btn btn-default login"><img src="images/arrow.png" alt=""></button>
+				</div>
+			</div>	
+			</form>
+			<p class="errorMessage">{{loginErrorMessage}}</p>
+		</div>			
+	</div>
+</div>
