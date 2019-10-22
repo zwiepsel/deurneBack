@@ -75,7 +75,8 @@ angular.module('yapp')
 
     $scope.deleteUserConfirmed = function(user){
               $http({
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/accounts/deleteUserByName',
+          // url: 'http://h2733926.stratoserver.net/DeurneAPI/api/accounts/deleteUserByName',
+          url: 'http://localhost:51556/api/accounts/deleteUserByName',
           method: 'delete',
           async: true,
           crossDomain: true,
@@ -113,7 +114,8 @@ angular.module('yapp')
     $scope.saveUser = function(user)
     {
         $http({
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/accounts/updateUser',
+         // url: 'http://h2733926.stratoserver.net/DeurneAPI/api/accounts/updateUser',
+          url: 'http://localhost:51556/api/accounts/updateUser',
           method: 'post',
           async: true,
           crossDomain: true,
@@ -149,7 +151,8 @@ angular.module('yapp')
     function activate() {
 
         $http({
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/accounts/users',
+          // url: 'http://h2733926.stratoserver.net/DeurneAPI/api/accounts/users',
+          url: 'http://localhost:51556/api/accounts/users',
           method: 'get',
           async: true,
           crossDomain: true,

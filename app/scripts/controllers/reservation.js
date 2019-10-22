@@ -36,9 +36,12 @@ angular.module('yapp')
     });
 
     $scope.updateData = function () {
-      if ($scope.selectedLocation != 'Kies een locatie' && $scope.selectedDate != undefined) {
+        console.log($scope.locationId)
+      if ($scope.locationId !== undefined && $scope.selectedDate != undefined) {
+        console.log('update data')
         $http({
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
+       //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
+          url: 'http://localhost:51556/api/reservations/byDateLocation',
           method: 'get',
           async: true,
           crossDomain: true,
@@ -48,6 +51,7 @@ angular.module('yapp')
           }
         }).then(function (response) {
           if (response) {
+            console.log(response)
             $scope.reservationsToday = response.data;
             var d = new Date($scope.selectedDate.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3") )
             createTimePartsModels($scope.amountOfFields, response.data, d.getDay());
@@ -76,7 +80,7 @@ angular.module('yapp')
         $scope.locationId = 2;
       }
       if ($scope.selectedType === 'Jump') {
-        $scope.locationId = 3;
+        $scope.locationId = 4;
       }
       $scope.updateData();
     });
@@ -184,7 +188,7 @@ angular.module('yapp')
       var hourEnd = 0
       var price = 0;
       console.log(booked)
-      for (var i = 0; i < 16; i++) {
+      for (var i = 0; i < 15; i++) {
           hourEnd = hour + 1;
           hourEnd = hourEnd < 10 ? "0" + hourEnd : hourEnd
          //  var timeDesc = hour + ':' + "00" + "-" + hourEnd + ":" + "00";
@@ -311,7 +315,7 @@ angular.module('yapp')
       var hourEnd = 0
       var price = 0;
       console.log(booked)
-      for (var i = 0; i < 16; i++) {
+      for (var i = 0; i < 15; i++) {
           hourEnd = hour + 1;
           hourEnd = hourEnd < 10 ? "0" + hourEnd : hourEnd
          //  var timeDesc = hour + ':' + "00" + "-" + hourEnd + ":" + "00";
@@ -405,7 +409,9 @@ angular.module('yapp')
     function createTimePartsModels(amountOfFields, data, type) {
       var field1Booked = data.filter(x => x.field === 1);
       var field2Booked = data.filter(x => x.field === 2);
-      console.log($scope.selectedType)
+      var field3Booked = data.filter(x => x.field === 3);
+      var field4Booked = data.filter(x => x.field === 4);
+      console.log($scope.selectedType, data, field1Booked)
       if($scope.selectedType === 'Soccer'){
           $scope.selectedTimes1 = [];
       }
@@ -423,13 +429,13 @@ angular.module('yapp')
           $scope.times = TimePartModelSoccer(field1Booked);
       }
       if($scope.selectedType === 'Squash'){
-          $scope.timePart2 = TimePartModelSquash(field1Booked);
-          $scope.timePart3 = TimePartModelSquash(field2Booked);
-          $scope.times = TimePartModelSquash(field1Booked);
+          $scope.timePart2 = TimePartModelSquash(field2Booked);
+          $scope.timePart3 = TimePartModelSquash(field3Booked);
+          $scope.times = TimePartModelSquash(field2Booked);
       }
       if($scope.selectedType === 'Jump'){
-          $scope.timePart4 = TimePartModelJump(field1Booked);
-          $scope.times = TimePartModelJump(field1Booked);
+          $scope.timePart4 = TimePartModelJump(field4Booked);
+          $scope.times = TimePartModelJump(field4Booked);
       }
 
       switch ($scope.amountOfFields) {
@@ -506,40 +512,56 @@ angular.module('yapp')
     $scope.selectedTimes3 = [];
     $scope.selectedTimes4 = [];
     $scope.selectTime = function (index, time, field) {
-
-      $scope.chosenField = field
-      $scope.selectedTimes = [];
-      switch (field) {
-        case 1:
-          $scope.selectedTimes = $scope.selectedTimes1;
-          break;
-        case 2:
-          $scope.selectedTimes = $scope.selectedTimes2;
-          break;
-        case 3:
-          $scope.selectedTimes = $scope.selectedTimes3;
-          break;
-        case 4:
-        $scope.selectedTimes = $scope.selectedTimes4;
-        break;
+      var dontBook = false;
+      if(field === 3){
+          if($scope.selectedTimes2.length >0){
+              dontBook = true;
+          }
+      }
+      if(field === 2){
+          if($scope.selectedTimes3.length >0){
+              dontBook = true;
+          }
       }
 
-      if (!angular.element('#field' + field + '-time' + index).hasClass('inactive')) {
-        $scope.selectedTimes.splice($scope.selectedTimes.indexOf(time), 1);
-        angular.element('#field' + field + '-time' + index).addClass('inactive');
+      console.log('geen book', dontBook)
+      if(!dontBook){
 
-      } else {
-        $scope.selectedTimes.splice($scope.selectedTimes.indexOf(time), 0, time);
-        angular.element('#field' + field + '-time' + index).removeClass('inactive');
+        $scope.chosenField = field
+        $scope.selectedTimes = [];
+        switch (field) {
+          case 1:
+            $scope.selectedTimes = $scope.selectedTimes1;
+            break;
+          case 2:
+            $scope.selectedTimes = $scope.selectedTimes2;
+            break;
+          case 3:
+            $scope.selectedTimes = $scope.selectedTimes3;
+            break;
+          case 4:
+          $scope.selectedTimes = $scope.selectedTimes4;
+          break;
+        }
+  
+        if (!angular.element('#field' + field + '-time' + index).hasClass('inactive')) {
+          $scope.selectedTimes.splice($scope.selectedTimes.indexOf(time), 1);
+          angular.element('#field' + field + '-time' + index).addClass('inactive');
+  
+        } else {
+          $scope.selectedTimes.splice($scope.selectedTimes.indexOf(time), 0, time);
+          angular.element('#field' + field + '-time' + index).removeClass('inactive');
+  
+        }
+        ($scope.selectedTimes.length > 0 ? $scope.selected = true : $scope.selected = false);
+        ($scope.selectedTimes.find(findOccupied) ? $scope.occupied = true : $scope.occupied = false);
+        if ($scope.selectedTimes.find(findOccupied) && $scope.selectedTimes.find(findFree)) {
+          $scope.invalid = true;
+        } else {
+          $scope.invalid = false;
+        }
+      }
 
-      }
-      ($scope.selectedTimes.length > 0 ? $scope.selected = true : $scope.selected = false);
-      ($scope.selectedTimes.find(findOccupied) ? $scope.occupied = true : $scope.occupied = false);
-      if ($scope.selectedTimes.find(findOccupied) && $scope.selectedTimes.find(findFree)) {
-        $scope.invalid = true;
-      } else {
-        $scope.invalid = false;
-      }
     }
 
 
@@ -604,6 +626,15 @@ angular.module('yapp')
     $scope.saveReservation = function () {
       $scope.submitted = true;
       var timeRangeArray = [];
+      if ($scope.selectedType === 'Soccer') {
+        $scope.locationId = 1;
+      }
+      if ($scope.selectedType === 'Squash') {
+        $scope.locationId = 2;
+      }
+      if ($scope.selectedType === 'Jump') {
+        $scope.locationId = 4;
+      }
       var ReservationTimes = (Number($scope.selectedEndTime.id)) - $scope.selectedStartTime.id
 
         ReservationTimes = ReservationTimes + 1;
@@ -614,7 +645,8 @@ angular.module('yapp')
       if ($scope.reservationForm.$valid) {
         if ($scope.update) {
           $http({
-            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/update',
+         //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/update',
+            url: 'http://localhost:51556/api/reservations/update',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -623,7 +655,7 @@ angular.module('yapp')
             },
             data: {
               "id": $scope.chosenReservation.id,
-              "locationId": $scope.location.id,
+              "locationId": $scope.locationid,
               "username": $scope.chosenReservation.username,
               "firstName": $scope.chosenReservation.firstName,
               "lastName": $scope.chosenReservation.lastName,
@@ -655,7 +687,8 @@ angular.module('yapp')
         }
         if ($scope.create) {
           $http({
-            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
+         //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
+            url: 'http://localhost:51556/api/reservations/create',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -810,7 +843,8 @@ angular.module('yapp')
     $scope.confirmDelete = function () {
       for (var k = 0; k < $scope.reservationsToDelete.length; k++) {
         $http({
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/delete',
+         // url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/delete',
+          url: 'http://localhost:51556/api/reservations/delete',
           method: 'delete',
           async: true,
           crossDomain: true,
@@ -836,7 +870,7 @@ angular.module('yapp')
               $('#deleteModal').modal('hide');
             } else {
               $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
-              console.log("Er is iets fout gegaan: " + response);
+
             }
           } else {
             $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
@@ -885,14 +919,15 @@ angular.module('yapp')
         $scope.loginHide = false;
       }
       $http({
-        url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
+   //     url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
+        url: 'http://localhost:51556/api/reservations/locations',
         method: 'get',
         async: true,
         crossDomain: true
       }).then(function (response) {
         if (response) {
           $scope.locations = response.data;
-          $scope.selectedLocation = $scope.locations[0].city;
+         // $scope.selectedLocation = $scope.locations[0].city;
           $scope.selectedType = 'Soccer'
         } else {
           //error
