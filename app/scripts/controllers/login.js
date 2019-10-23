@@ -25,7 +25,7 @@ angular.module('yapp')
             function login(username, password, callback) {
             $http({
               //  url:   'http://h2733926.stratoserver.net/DeurneAPI/oauth/token',
-                url: 'http://localhost:51556/oauth/token',
+                url: 'http://h2733926.stratoserver.net/DeurneAPI/oauth/token',
                 method: 'post',
                 async: true,
                 crossDomain: true,
