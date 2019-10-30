@@ -39,7 +39,7 @@ angular.module('yapp')
       if ($scope.locationId !== undefined && $scope.selectedDate != undefined) {
         $http({
        //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
+          url: 'http://localhost:51556/api/reservations/byDateLocation',
           method: 'get',
           async: true,
           crossDomain: true,
@@ -556,7 +556,7 @@ angular.module('yapp')
       if ($scope.jumpReservationForm.$valid) {
           $http({
          //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
-            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/jumpReservation',
+            url: 'http://localhost:51556/api/reservations/jumpReservation',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -615,11 +615,12 @@ angular.module('yapp')
         timeRangeArray.push($scope.selectedStartTime.id + j)
       }
 
+      console.log(timeRangeArray)
       if ($scope.reservationForm.$valid) {
         if ($scope.update) {
           $http({
          //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/update',
-            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/update',
+            url: 'http://localhost:51556/api/reservations/update',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -628,7 +629,7 @@ angular.module('yapp')
             },
             data: {
               "id": $scope.chosenReservation.id,
-              "locationId": $scope.locationid,
+              "locationId": $scope.locationId,
               "username": $scope.chosenReservation.username,
               "firstName": $scope.chosenReservation.firstName,
               "lastName": $scope.chosenReservation.lastName,
@@ -662,7 +663,7 @@ angular.module('yapp')
         if ($scope.create) {
           $http({
          //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
-            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
+            url: 'http://localhost:51556/api/reservations/create',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -772,7 +773,7 @@ angular.module('yapp')
 
         $http({
           //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
-             url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/JumpByDateLocation',
+             url: 'http://localhost:51556/api/reservations/JumpByDateLocation',
              method: 'get',
              async: true,
              crossDomain: true,
@@ -784,7 +785,6 @@ angular.module('yapp')
              if (response) {
               $scope.jumpReservations = response.data;
               $scope.chosenReservation.title = "Jump reserveringen (" + $scope.jumpReservations.length + ")"; 
-              console.log($scope.jumpReservations)
               $('#jumpModal').modal({
                 show: 'true'
               });
@@ -807,7 +807,7 @@ angular.module('yapp')
       console.log($scope.jumpReservations[index])
       $http({
         //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
-           url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/deleteJumpReservation',
+           url: 'http://localhost:51556/api/reservations/deleteJumpReservation',
            method: 'delete',
            async: true,
            crossDomain: true,
@@ -877,7 +877,7 @@ angular.module('yapp')
       var sequential = true;
       var limit = $scope.selectedTimes.length;
       for (var i = 0; i < limit; ++i) {
-
+        console.log($scope.selectedStartTime, $scope.selectedTimes)
         $scope.results.push($scope.selectedTimes[i])
         $scope.results = $scope.results.sort(SortById)
         $scope.selectedStartTime = $scope.results[0]
@@ -898,11 +898,8 @@ angular.module('yapp')
             }
           }
           $scope.selectedStartTime = $scope.timePart1[_.first($scope.chosenReservation.timeRange.split(','))]
-          if ($scope.selectedLocation === "Geertruidenberg") {
-            $scope.selectedEndTime = $scope.timePart1[Number(_.last($scope.chosenReservation.timeRange.split(',')))]
-          } else {
-            $scope.selectedEndTime = $scope.timePart1[Number(_.last($scope.chosenReservation.timeRange.split(','))) + 1]
-          }
+          $scope.selectedEndTime = $scope.timePart1[Number(_.last($scope.chosenReservation.timeRange.split(',')))]
+
 
           $scope.chosenReservation.field = $scope.chosenField;
         }
@@ -954,7 +951,7 @@ angular.module('yapp')
       for (var k = 0; k < $scope.reservationsToDelete.length; k++) {
         $http({
          // url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/delete',
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/delete',
+          url: 'http://localhost:51556/api/reservations/delete',
           method: 'delete',
           async: true,
           crossDomain: true,
@@ -972,6 +969,7 @@ angular.module('yapp')
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
+              $scope.selectedTimes4 = [];
               $scope.create = false;
               $scope.update = false;
               $scope.removeChecked();
@@ -1028,20 +1026,21 @@ angular.module('yapp')
       } else {
         $scope.loginHide = false;
       }
-      $http({
-   //     url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
-        url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
-        method: 'get',
-        async: true,
-        crossDomain: true
-      }).then(function (response) {
-        if (response) {
-          $scope.locations = response.data;
-         // $scope.selectedLocation = $scope.locations[0].city;
-          $scope.selectedType = 'Soccer'
-        } else {
-          //error
-        }
-      });
+      $scope.selectedType = 'Soccer'
+  //     $http({
+  //  //     url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
+  //       url: 'http://localhost:51556/api/reservations/locations',
+  //       method: 'get',
+  //       async: true,
+  //       crossDomain: true
+  //     }).then(function (response) {
+  //       if (response) {
+  //         $scope.locations = response.data;
+  //        // $scope.selectedLocation = $scope.locations[0].city;
+ 
+  //       } else {
+  //         //error
+  //       }
+  //     });
     }
   }]);

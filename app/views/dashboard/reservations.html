@@ -480,6 +480,14 @@
                                         <div class="form-group">
                                             <label class="control-label" for="location"></label>
                                             <div style="text-align:center">
+                                                <button type="button" ng-click="deleteReservation()" ng-disabled="!occupied" class="btn btn-success fieldButton">Verwijder reservering</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-group">
+                                            <label class="control-label" for="location"></label>
+                                            <div style="text-align:center">
                                                 <button type="button" ng-click="addJump()" ng-disabled="!occupied" class="btn btn-success fieldButton">Toevoegen boeking</button>
                                             </div>
                                         </div>
