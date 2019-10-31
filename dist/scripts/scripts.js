@@ -928,6 +928,7 @@ angular.module('yapp')
         timeRangeArray.push($scope.selectedStartTime.id + j)
       }
 
+      console.log(timeRangeArray)
       if ($scope.reservationForm.$valid) {
         if ($scope.update) {
           $http({
@@ -941,7 +942,7 @@ angular.module('yapp')
             },
             data: {
               "id": $scope.chosenReservation.id,
-              "locationId": $scope.locationid,
+              "locationId": $scope.locationId,
               "username": $scope.chosenReservation.username,
               "firstName": $scope.chosenReservation.firstName,
               "lastName": $scope.chosenReservation.lastName,
@@ -1097,7 +1098,6 @@ angular.module('yapp')
              if (response) {
               $scope.jumpReservations = response.data;
               $scope.chosenReservation.title = "Jump reserveringen (" + $scope.jumpReservations.length + ")"; 
-              console.log($scope.jumpReservations)
               $('#jumpModal').modal({
                 show: 'true'
               });
@@ -1190,7 +1190,7 @@ angular.module('yapp')
       var sequential = true;
       var limit = $scope.selectedTimes.length;
       for (var i = 0; i < limit; ++i) {
-
+        console.log($scope.selectedStartTime, $scope.selectedTimes)
         $scope.results.push($scope.selectedTimes[i])
         $scope.results = $scope.results.sort(SortById)
         $scope.selectedStartTime = $scope.results[0]
@@ -1211,11 +1211,8 @@ angular.module('yapp')
             }
           }
           $scope.selectedStartTime = $scope.timePart1[_.first($scope.chosenReservation.timeRange.split(','))]
-          if ($scope.selectedLocation === "Geertruidenberg") {
-            $scope.selectedEndTime = $scope.timePart1[Number(_.last($scope.chosenReservation.timeRange.split(',')))]
-          } else {
-            $scope.selectedEndTime = $scope.timePart1[Number(_.last($scope.chosenReservation.timeRange.split(','))) + 1]
-          }
+          $scope.selectedEndTime = $scope.timePart1[Number(_.last($scope.chosenReservation.timeRange.split(',')))]
+
 
           $scope.chosenReservation.field = $scope.chosenField;
         }
@@ -1285,6 +1282,7 @@ angular.module('yapp')
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
+              $scope.selectedTimes4 = [];
               $scope.create = false;
               $scope.update = false;
               $scope.removeChecked();
@@ -1341,21 +1339,22 @@ angular.module('yapp')
       } else {
         $scope.loginHide = false;
       }
-      $http({
-   //     url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
-        url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
-        method: 'get',
-        async: true,
-        crossDomain: true
-      }).then(function (response) {
-        if (response) {
-          $scope.locations = response.data;
-         // $scope.selectedLocation = $scope.locations[0].city;
-          $scope.selectedType = 'Soccer'
-        } else {
-          //error
-        }
-      });
+      $scope.selectedType = 'Soccer'
+  //     $http({
+  //  //     url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
+  //       url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
+  //       method: 'get',
+  //       async: true,
+  //       crossDomain: true
+  //     }).then(function (response) {
+  //       if (response) {
+  //         $scope.locations = response.data;
+  //        // $scope.selectedLocation = $scope.locations[0].city;
+ 
+  //       } else {
+  //         //error
+  //       }
+  //     });
     }
   }]);
 

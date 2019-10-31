@@ -39,7 +39,7 @@ angular.module('yapp')
       if ($scope.locationId !== undefined && $scope.selectedDate != undefined) {
         $http({
        //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
-          url: 'http://localhost:51556/api/reservations/byDateLocation',
+          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
           method: 'get',
           async: true,
           crossDomain: true,
@@ -556,7 +556,7 @@ angular.module('yapp')
       if ($scope.jumpReservationForm.$valid) {
           $http({
          //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
-            url: 'http://localhost:51556/api/reservations/jumpReservation',
+            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/jumpReservation',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -620,7 +620,7 @@ angular.module('yapp')
         if ($scope.update) {
           $http({
          //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/update',
-            url: 'http://localhost:51556/api/reservations/update',
+            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/update',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -663,7 +663,7 @@ angular.module('yapp')
         if ($scope.create) {
           $http({
          //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
-            url: 'http://localhost:51556/api/reservations/create',
+            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -773,7 +773,7 @@ angular.module('yapp')
 
         $http({
           //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
-             url: 'http://localhost:51556/api/reservations/JumpByDateLocation',
+             url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/JumpByDateLocation',
              method: 'get',
              async: true,
              crossDomain: true,
@@ -807,7 +807,7 @@ angular.module('yapp')
       console.log($scope.jumpReservations[index])
       $http({
         //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
-           url: 'http://localhost:51556/api/reservations/deleteJumpReservation',
+           url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/deleteJumpReservation',
            method: 'delete',
            async: true,
            crossDomain: true,
@@ -951,7 +951,7 @@ angular.module('yapp')
       for (var k = 0; k < $scope.reservationsToDelete.length; k++) {
         $http({
          // url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/delete',
-          url: 'http://localhost:51556/api/reservations/delete',
+          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/delete',
           method: 'delete',
           async: true,
           crossDomain: true,
@@ -1029,7 +1029,7 @@ angular.module('yapp')
       $scope.selectedType = 'Soccer'
   //     $http({
   //  //     url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
-  //       url: 'http://localhost:51556/api/reservations/locations',
+  //       url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
   //       method: 'get',
   //       async: true,
   //       crossDomain: true

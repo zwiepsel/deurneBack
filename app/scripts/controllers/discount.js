@@ -92,7 +92,7 @@ angular.module('yapp')
       if ($scope.discountForm.$valid) {
         $http({
         //  url: 'http://h2733926.stratoserver.net/DeurneAPI/api/discounts/create',
-          url: 'http://localhost:51556/api/discounts/create',
+          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/discounts/create',
           method: 'post',
           async: true,
           crossDomain: true,
