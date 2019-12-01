@@ -24,8 +24,8 @@ angular.module('yapp')
     }
             function login(username, password, callback) {
             $http({
-              //  url:   'http://h2733926.stratoserver.net/DeurneAPI/oauth/token',
-                url: 'http://h2733926.stratoserver.net/DeurneAPI/oauth/token',
+              //  url:   'https://reserveren.amesdeurne.nl/oauth/token',
+                url: 'https://reserveren.amesdeurne.nl/oauth/token',
                 method: 'post',
                 async: true,
                 crossDomain: true,

@@ -38,8 +38,8 @@ angular.module('yapp')
     $scope.updateData = function () {
       if ($scope.locationId !== undefined && $scope.selectedDate != undefined) {
         $http({
-       //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
+       //   url: 'https://reserveren.amesdeurne.nl/api/reservations/byDateLocation',
+          url: 'https://reserveren.amesdeurne.nl/api/reservations/byDateLocation',
           method: 'get',
           async: true,
           crossDomain: true,
@@ -555,8 +555,8 @@ angular.module('yapp')
     $scope.saveJumpReservation = function(){
       if ($scope.jumpReservationForm.$valid) {
           $http({
-         //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
-            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/jumpReservation',
+         //   url: 'https://reserveren.amesdeurne.nl/api/reservations/create',
+            url: 'https://reserveren.amesdeurne.nl/api/reservations/jumpReservation',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -619,8 +619,8 @@ angular.module('yapp')
       if ($scope.reservationForm.$valid) {
         if ($scope.update) {
           $http({
-         //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/update',
-            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/update',
+         //   url: 'https://reserveren.amesdeurne.nl/api/reservations/update',
+            url: 'https://reserveren.amesdeurne.nl/api/reservations/update',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -662,8 +662,8 @@ angular.module('yapp')
         }
         if ($scope.create) {
           $http({
-         //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
-            url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/create',
+         //   url: 'https://reserveren.amesdeurne.nl/api/reservations/create',
+            url: 'https://reserveren.amesdeurne.nl/api/reservations/create',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -772,8 +772,8 @@ angular.module('yapp')
         $scope.chosenReservation.field = $scope.chosenField;
 
         $http({
-          //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
-             url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/JumpByDateLocation',
+          //   url: 'https://reserveren.amesdeurne.nl/api/reservations/byDateLocation',
+             url: 'https://reserveren.amesdeurne.nl/api/reservations/JumpByDateLocation',
              method: 'get',
              async: true,
              crossDomain: true,
@@ -806,8 +806,8 @@ angular.module('yapp')
     $scope.removeJumpReservation = function(index){
       console.log($scope.jumpReservations[index])
       $http({
-        //   url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/byDateLocation',
-           url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/deleteJumpReservation',
+        //   url: 'https://reserveren.amesdeurne.nl/api/reservations/byDateLocation',
+           url: 'https://reserveren.amesdeurne.nl/api/reservations/deleteJumpReservation',
            method: 'delete',
            async: true,
            crossDomain: true,
@@ -950,8 +950,8 @@ angular.module('yapp')
     $scope.confirmDelete = function () {
       for (var k = 0; k < $scope.reservationsToDelete.length; k++) {
         $http({
-         // url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/delete',
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/delete',
+         // url: 'https://reserveren.amesdeurne.nl/api/reservations/delete',
+          url: 'https://reserveren.amesdeurne.nl/api/reservations/delete',
           method: 'delete',
           async: true,
           crossDomain: true,
@@ -1028,8 +1028,8 @@ angular.module('yapp')
       }
       $scope.selectedType = 'Soccer'
   //     $http({
-  //  //     url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
-  //       url: 'http://h2733926.stratoserver.net/DeurneAPI/api/reservations/locations',
+  //  //     url: 'https://reserveren.amesdeurne.nl/api/reservations/locations',
+  //       url: 'https://reserveren.amesdeurne.nl/api/reservations/locations',
   //       method: 'get',
   //       async: true,
   //       crossDomain: true

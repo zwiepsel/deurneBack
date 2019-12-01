@@ -34,8 +34,8 @@ angular.module('yapp')
 
     $scope.searchDiscount = function(searchDiscount){
         $http({
-        //  url: 'http://h2733926.stratoserver.net/DeurneAPI/api/discounts/find',
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/discounts/find',
+        //  url: 'https://reserveren.amesdeurne.nl/api/discounts/find',
+          url: 'https://reserveren.amesdeurne.nl/api/discounts/find',
           method: 'post',
           async: true,
           crossDomain: true,
@@ -91,8 +91,8 @@ angular.module('yapp')
       $scope.submitted = true;
       if ($scope.discountForm.$valid) {
         $http({
-        //  url: 'http://h2733926.stratoserver.net/DeurneAPI/api/discounts/create',
-          url: 'http://h2733926.stratoserver.net/DeurneAPI/api/discounts/create',
+        //  url: 'https://reserveren.amesdeurne.nl/api/discounts/create',
+          url: 'https://reserveren.amesdeurne.nl/api/discounts/create',
           method: 'post',
           async: true,
           crossDomain: true,
