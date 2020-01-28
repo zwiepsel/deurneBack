@@ -886,7 +886,8 @@ angular.module('yapp')
               "timeRange": $scope.chosenReservation.starttime
             }
           }).then(function (response) {
-            if (response.statusText === "OK") {
+            console.log(response)
+            if (response.status === 200) {
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
@@ -953,7 +954,7 @@ angular.module('yapp')
               // "timeRange": $scope.selectedStartTime.id + ',' + (Number($scope.selectedEndTime.id) - 1)
             }
           }).then(function (response) {
-            if (response.statusText === "OK") {
+            if (response.status === 200) {
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
@@ -995,7 +996,7 @@ angular.module('yapp')
               "payed" : 2
             }
           }).then(function (response) {
-            if (response.statusText === "OK") {
+            if (response.status === 200) {
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
@@ -1278,7 +1279,6 @@ angular.module('yapp')
           },
         }).then(function (response) {
           if (response) {
-            if (response.statusText === "OK") {
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
@@ -1289,18 +1289,14 @@ angular.module('yapp')
               $scope.updateData();
               $.toaster('Reservaties verwijderd', 'Verwerkt', 'success');
               $('#deleteModal').modal('hide');
-            } else {
-              $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
-
-            }
           } else {
-            $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
+          //  $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
             $scope.removeChecked();
             $scope.updateData();
             $('#deleteModal').modal('hide');
           }
         }, function errorCallback(response) {
-          $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
+         // $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
           $scope.removeChecked();
           $scope.updateData();
           $('#deleteModal').modal('hide');

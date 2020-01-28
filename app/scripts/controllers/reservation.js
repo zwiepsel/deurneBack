@@ -15,6 +15,7 @@ angular.module('yapp')
     $scope.dongemond = false;
     $scope.selectedLocation = 'Kies een locatie'
     $scope.selectedDate = new Date().format('d-m-Y');
+    console.log($scope.selectedDate)
     var dateToday = new Date();
     $scope.$onInit = activate();
     $scope.reservationsToday = [];
@@ -38,8 +39,8 @@ angular.module('yapp')
     $scope.updateData = function () {
       if ($scope.locationId !== undefined && $scope.selectedDate != undefined) {
         $http({
+          url: 'http://localhost:51556/api/reservations/byDateLocation',
        //   url: 'https://reserveren.amesdeurne.nl/api/reservations/byDateLocation',
-          url: 'https://reserveren.amesdeurne.nl/api/reservations/byDateLocation',
           method: 'get',
           async: true,
           crossDomain: true,
@@ -555,8 +556,8 @@ angular.module('yapp')
     $scope.saveJumpReservation = function(){
       if ($scope.jumpReservationForm.$valid) {
           $http({
-         //   url: 'https://reserveren.amesdeurne.nl/api/reservations/create',
-            url: 'https://reserveren.amesdeurne.nl/api/reservations/jumpReservation',
+            url: 'http://localhost:51556/api/reservations/create',
+          //  url: 'https://reserveren.amesdeurne.nl/api/reservations/jumpReservation',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -573,7 +574,8 @@ angular.module('yapp')
               "timeRange": $scope.chosenReservation.starttime
             }
           }).then(function (response) {
-            if (response.statusText === "OK") {
+            console.log(response)
+            if (response.status === 200) {
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
@@ -597,6 +599,7 @@ angular.module('yapp')
 
     $scope.saveReservation = function () {
       $scope.submitted = true;
+
       var timeRangeArray = [];
       if ($scope.selectedType === 'Soccer') {
         $scope.locationId = 1;
@@ -619,8 +622,8 @@ angular.module('yapp')
       if ($scope.reservationForm.$valid) {
         if ($scope.update) {
           $http({
+             url: 'http://localhost:51556/api/reservations/update',
          //   url: 'https://reserveren.amesdeurne.nl/api/reservations/update',
-            url: 'https://reserveren.amesdeurne.nl/api/reservations/update',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -633,14 +636,14 @@ angular.module('yapp')
               "username": $scope.chosenReservation.username,
               "firstName": $scope.chosenReservation.firstName,
               "lastName": $scope.chosenReservation.lastName,
-              "reservationDate": new Date($scope.selectedDate.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3") ),
+              "reservationDate": $scope.selectedDate.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"),
               "phone": $scope.chosenReservation.phone,
               "field": $scope.chosenField,
               "timeRange": timeRangeArray.join()
               // "timeRange": $scope.selectedStartTime.id + ',' + (Number($scope.selectedEndTime.id) - 1)
             }
           }).then(function (response) {
-            if (response.statusText === "OK") {
+            if (response.status === 200) {
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
@@ -662,8 +665,8 @@ angular.module('yapp')
         }
         if ($scope.create) {
           $http({
-         //   url: 'https://reserveren.amesdeurne.nl/api/reservations/create',
-            url: 'https://reserveren.amesdeurne.nl/api/reservations/create',
+             url: 'http://localhost:51556/api/reservations/create',
+          //  url: 'https://reserveren.amesdeurne.nl/api/reservations/create',
             method: 'post',
             async: true,
             crossDomain: true,
@@ -682,7 +685,7 @@ angular.module('yapp')
               "payed" : 2
             }
           }).then(function (response) {
-            if (response.statusText === "OK") {
+            if (response.status === 200) {
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
@@ -772,8 +775,8 @@ angular.module('yapp')
         $scope.chosenReservation.field = $scope.chosenField;
 
         $http({
-          //   url: 'https://reserveren.amesdeurne.nl/api/reservations/byDateLocation',
-             url: 'https://reserveren.amesdeurne.nl/api/reservations/JumpByDateLocation',
+             url: 'http://localhost:51556/api/reservations/byDateLocation',
+           //  url: 'https://reserveren.amesdeurne.nl/api/reservations/JumpByDateLocation',
              method: 'get',
              async: true,
              crossDomain: true,
@@ -806,8 +809,8 @@ angular.module('yapp')
     $scope.removeJumpReservation = function(index){
       console.log($scope.jumpReservations[index])
       $http({
-        //   url: 'https://reserveren.amesdeurne.nl/api/reservations/byDateLocation',
-           url: 'https://reserveren.amesdeurne.nl/api/reservations/deleteJumpReservation',
+             url: 'http://localhost:51556/api/reservations/byDateLocation',
+        //   url: 'https://reserveren.amesdeurne.nl/api/reservations/deleteJumpReservation',
            method: 'delete',
            async: true,
            crossDomain: true,
@@ -950,8 +953,8 @@ angular.module('yapp')
     $scope.confirmDelete = function () {
       for (var k = 0; k < $scope.reservationsToDelete.length; k++) {
         $http({
+          url: 'http://localhost:51556/api/reservations/delete',
          // url: 'https://reserveren.amesdeurne.nl/api/reservations/delete',
-          url: 'https://reserveren.amesdeurne.nl/api/reservations/delete',
           method: 'delete',
           async: true,
           crossDomain: true,
@@ -965,7 +968,6 @@ angular.module('yapp')
           },
         }).then(function (response) {
           if (response) {
-            if (response.statusText === "OK") {
               $scope.selectedTimes1 = [];
               $scope.selectedTimes2 = [];
               $scope.selectedTimes3 = [];
@@ -976,18 +978,14 @@ angular.module('yapp')
               $scope.updateData();
               $.toaster('Reservaties verwijderd', 'Verwerkt', 'success');
               $('#deleteModal').modal('hide');
-            } else {
-              $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
-
-            }
           } else {
-            $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
+          //  $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
             $scope.removeChecked();
             $scope.updateData();
             $('#deleteModal').modal('hide');
           }
         }, function errorCallback(response) {
-          $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
+         // $.toaster('Er is iets fout gegaan bij het verwijderen van de reservatie', 'Fout', 'danger');
           $scope.removeChecked();
           $scope.updateData();
           $('#deleteModal').modal('hide');
